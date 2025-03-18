@@ -6,6 +6,7 @@ let buildings = ref([
     {name: 'Cursor', price: 15, cps: 0.1, count: 0},
     {name: 'Grandma', price: 100, cps: 1, count: 0},
     {name: 'Farm', price: 1100, cps: 8, count: 0},
+    {name: 'Drag click', price: 2000, cps: 15, count: 0},
 ]);
 
 setInterval(() => {
