@@ -1,21 +1,18 @@
 <script setup>
-
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import CharacterCard from '../components/CharacterCard.vue';
 import PagedPagination from '../components/PagedPagination.vue';
 
-const characters = ref([]);
-const pagination = ref({});
-let currentPage = ref(1)
+let characters = ref([]);
+let pagination = ref({});
+let currentPage = ref(1);
 let searchValue = ref('');
 let searchTimeout = null;
-
-await page(currentPage.value)
-
+await page(currentPage.value);
 
 async function getCharacters() {
-    let response = await axios.get(`https://rickandmortyapi.com/api/character`, {
+    let response = await axios.get('https://rickandmortyapi.com/api/character',{
         params: {
             page: currentPage.value,
             name: searchValue.value
@@ -26,43 +23,33 @@ async function getCharacters() {
 }
 
 async function next() {
-    currentPage.value++
+    currentPage.value++;
     await getCharacters();
 }
 
 async function prev() {
-    currentPage.value--
+    currentPage.value--;
     await getCharacters();
 }
 
 async function page(page) {
-    currentPage.value = page
-    getCharacters()
+    currentPage.value = page;
+    await getCharacters();
 }
 
-async function search() {
-    clearTimeout(searchTimeout)
+async function search(){
+    clearTimeout(searchTimeout);
     searchTimeout = setTimeout(async () => {
-        await getCharacters()
-    }, 250)
+        await getCharacters();
+    }, 750);
 }
-
-// onMounted(() => {
-//     document.addEventListener('scroll', () => {
-//         if (window.scrollY + window.innerHeight > document.body.clientHeight - 300) {
-//             if (pagination.value.next) {
-//                 next()
-//             }
-//         }
-//         // console.log(document.body.clientHeight, window.scrollY + window.innerHeight)
-//     })
-// })
 
 </script>
+
 <template>
     <div class="field has-addons">
         <div class="control is-expanded">
-            <input class="input" type="text" placeholder="Search.." @input="search" v-model="searchValue">
+            <input class="input" type="text" placeholder="Search..." @input="search" v-model="searchValue">
         </div>
         <div class="control">
             <button class="button is-info" @click="search">
